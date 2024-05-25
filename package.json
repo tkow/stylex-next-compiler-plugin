@@ -1,0 +1,26 @@
+{
+  "name": "@tkow/stylex-next-compiler-plugin",
+  "main": "dist/index.js",
+  "files": ["src", "dist"],
+  "scripts": {
+    "build": "rm -fr ./dist && tsc",
+    "build:watch": "rm -fr ./dist && tsc --watch"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.6",
+    "@stylexjs/babel-plugin": "^0.6.1",
+    "bun-types": "latest",
+    "typescript": "^5.4.5",
+    "webpack": "^5.91.0"
+  },
+  "peerDependencies": {
+    "@stylexjs/babel-plugin": "*",
+    "@babel/core": "*",
+    "webpack": ">=5.0.0"
+  },
+  "dependencies": {
+    "@babel/plugin-syntax-flow": "^7.24.6",
+    "@babel/plugin-syntax-jsx": "^7.24.6",
+    "@babel/plugin-syntax-typescript": "^7.24.6"
+  }
+}
