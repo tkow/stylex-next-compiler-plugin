@@ -1,11 +1,16 @@
 {
   "name": "@tkow/stylex-next-compiler-plugin",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "dist/index.js",
   "files": ["src", "dist"],
+  "keywords": ["stylex", "next", "compiler", "plugin"],
   "author": {
     "name": "Takeo Yoshida",
     "email": "takeo_kusama@mochicorp.com"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
     "build": "rm -fr ./dist && tsc",
