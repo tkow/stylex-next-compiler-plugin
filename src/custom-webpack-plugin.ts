@@ -222,34 +222,6 @@ class StylexPlugin {
     });
   }
 
-  // reprocessStyles() {
-  //   if (metadata.stylex != null && metadata.stylex.length > 0) {
-  //     const oldRules = stylexPlugin.stylexRules[filename] || [];
-  //     stylexPlugin.stylexRules[filename] = metadata.stylex;
-  //     logger.debug(`Read stylex styles from ${filename}:`, metadata.stylex);
-
-  //     const oldClassNames = new Set(oldRules.map((rule) => rule[0]));
-  //     const newClassNames = new Set(metadata.stylex.map((rule) => rule[0]));
-
-  //     // If there are any new classNames in the output we need to recompile
-  //     // the CSS bundle.
-  //     if (
-  //       oldClassNames.size !== newClassNames.size ||
-  //       [...newClassNames].some((className) => !oldClassNames.has(className)) ||
-  //       filename.endsWith(".stylex.ts") ||
-  //       filename.endsWith(".stylex.tsx") ||
-  //       filename.endsWith(".stylex.js")
-  //     ) {
-  //       stylexPlugin.compilers.forEach((compiler) => {
-  //         stylexPlugin.cssFiles.forEach((cssFile) => {
-  //           compiler.watchFileSystem.watcher.fileWatchers
-  //             .get(cssFile)
-  //             .watcher.emit("change");
-  //         });
-  //       });
-  //     }
-  //   }
-  // }
 }
 
 export default StylexPlugin;
