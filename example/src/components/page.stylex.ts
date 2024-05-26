@@ -2,6 +2,8 @@ import * as stylex from '@stylexjs/stylex'
 
 export const styles = stylex.create({
   main: {
-    color: 'red'
+    color: '#add',
+    // color: '#Fcc',
+    // color: 'red',
   }
 })

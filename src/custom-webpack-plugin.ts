@@ -11,12 +11,11 @@ import path from "path";
 import stylexBabelPlugin from "@stylexjs/babel-plugin";
 import fs from "fs/promises";
 import { PLUGIN_NAME } from "./const";
-import  { Compilation, Compiler, NormalModule, WebpackError } from "webpack";
-import  { sources } from "webpack";
-import  { logger } from "./logger";
+import { Compilation, Compiler, NormalModule, WebpackError } from "webpack";
+import { sources } from "webpack";
+import { logger } from "./logger";
 
 const { RawSource, ConcatSource } = sources;
-
 
 const IS_DEV_ENV =
   process.env.NODE_ENV === "development" ||
@@ -51,8 +50,9 @@ type PluginOptions = $ReadOnly<{
 }>
 */
 
-const stylexRules: {[key: string]: any} = {};
+const stylexRules: { [key: string]: any } = {};
 const cssFiles: Set<string> = new Set();
+const cssCachesToAppend: Record<string, InstanceType<typeof RawSource>> = {};
 
 class StylexPlugin {
   [x: string]: any;
@@ -127,7 +127,7 @@ class StylexPlugin {
                   babelPlugin: this.babelPlugin,
                   stylexRules,
                   cssFiles,
-                  stylexImports:this.stylexImports
+                  stylexImports: this.stylexImports,
                 },
               },
             } as any);
@@ -163,22 +163,42 @@ class StylexPlugin {
             stage: Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS, // see below for more stages
           },
           (assets: any) => {
-            const cssFileName = Object.keys(assets).find(
+            let cssFileName = Object.keys(assets).find(
               typeof this.appendTo === "function"
                 ? this.appendTo
                 : (filename) => filename.endsWith(this.appendTo)
             );
-            const stylexCSS = getStyleXRules();
 
+            const isCachedFlag = !cssFileName;
+
+            cssFileName ||= Object.keys(cssCachesToAppend).find(
+              typeof this.appendTo === "function"
+                ? this.appendTo
+                : (filename) => filename.endsWith(this.appendTo)
+            );
+
+            const stylexCSS = getStyleXRules();
             if (cssFileName && stylexCSS != null) {
               this.filePath = path.join(process.cwd(), ".next", cssFileName);
 
+              cssCachesToAppend[cssFileName] ||= new RawSource(
+                assets[cssFileName].source()
+              );
+
               const updatedSource = new ConcatSource(
-                new RawSource(assets[cssFileName].source()),
+                cssCachesToAppend[cssFileName],
                 new RawSource(stylexCSS)
               );
 
-              compilation.updateAsset(cssFileName, updatedSource);
+              if (isCachedFlag) {
+                if (this.dev) {
+                  fs.writeFile(this.filePath, updatedSource.source()).then(() =>
+                    logger.debug("wrote file", this.filePath)
+                  );
+                }
+              } else {
+                compilation.updateAsset(cssFileName, updatedSource);
+              }
             }
           }
         );
