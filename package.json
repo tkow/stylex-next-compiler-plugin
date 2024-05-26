@@ -3,6 +3,7 @@
   "version": "0.0.2",
   "main": "dist/index.js",
   "files": ["src", "dist"],
+  "license": "MIT",
   "keywords": ["stylex", "next", "compiler", "plugin"],
   "author": {
     "name": "Takeo Yoshida",
