@@ -1,5 +1,6 @@
 {
   "name": "@tkow/stylex-next-compiler-plugin",
+  "version": "0.0.1",
   "main": "dist/index.js",
   "files": ["src", "dist"],
   "scripts": {
@@ -16,7 +17,11 @@
   "peerDependencies": {
     "@stylexjs/babel-plugin": "*",
     "@babel/core": "*",
-    "webpack": ">=5.0.0"
+    "webpack": ">=5.0.0",
+    "next": ">=14.0.1",
+    "@babel/plugin-syntax-flow": "^7.24.0",
+    "@babel/plugin-syntax-jsx": "^7.24.0",
+    "@babel/plugin-syntax-typescript": "^7.24.0"
   },
   "dependencies": {
     "@babel/plugin-syntax-flow": "^7.24.6",
