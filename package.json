@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "main": "dist/index.js",
   "files": ["src", "dist"],
+  "author": {
+    "name": "Takeo Yoshida",
+    "email": "takeo_kusama@mochicorp.com"
+  },
   "scripts": {
     "build": "rm -fr ./dist && tsc",
     "build:watch": "rm -fr ./dist && tsc --watch"
